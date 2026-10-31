@@ -1,0 +1,17 @@
+name: APK derle
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - run: unzip -o GrupUyari.zip && cd GrupUyari && chmod +x gradlew && ./gradlew --no-daemon assembleRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GrupUyari-apk
+          path: GrupUyari/app/build/outputs/apk/release/app-release.apk
